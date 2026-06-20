@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #050505;
+  --color-secondary: #0B0B0B;
+  --color-card: #0f0f0f;
+  --color-card-hover: #141414;
+  --color-neon: #00FF88;
+  --color-neon-dark: #00AA55;
+  --color-neon-dim: rgba(0, 255, 136, 0.15);
+  --color-neon-border: rgba(0, 255, 136, 0.3);
+  --color-text-main: #EAEAEA;
+  --color-text-muted: #888888;
+  --color-text-dim: #555555;
+  --color-error: #FF4D4D;
+  --color-warning: #FFB800;
+  --color-info: #00BFFF;
+  --color-success: #00FF88;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #050505;
+  color: #EAEAEA;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  width: 100%;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0B0B;
+}
+::-webkit-scrollbar-thumb {
+  background: #00AA55;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00FF88;
+}
+
+/* ── Neon glow utilities ── */
+.neon-text {
+  color: #00FF88;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.8), 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.neon-border {
+  border-color: rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.1), inset 0 0 10px rgba(0, 255, 136, 0.03);
+}
+
+.neon-glow {
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1);
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 255, 136, 0.12);
+  border-radius: 12px;
+}
+
+/* ── Grid background ── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Scanlines ── */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Terminal cursor blink ── */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.terminal-cursor::after {
+  content: '█';
+  color: #00FF88;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* ── Glitch animation ── */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.glitch:hover {
+  animation: glitch 0.3s ease;
+}
+
+/* ── Pulse neon ── */
+@keyframes pulse-neon {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(0, 255, 136, 0.7), 0 0 50px rgba(0, 255, 136, 0.3); }
+}
+
+.pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ── Fade in up ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ── Status colors ── */
+.status-locked { color: #555555; }
+.status-available { color: #FFB800; }
+.status-progress { color: #00BFFF; }
+.status-done { color: #00FF88; }
+
+/* ── Progress bar animated ── */
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--progress-width); }
+}
+
+.progress-animated {
+  animation: progress-fill 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ── XP flash ── */
+@keyframes xp-flash {
+  0% { opacity: 0; transform: translateY(0) scale(0.8); }
+  20% { opacity: 1; transform: translateY(-10px) scale(1.1); }
+  80% { opacity: 1; transform: translateY(-30px) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+}
+
+.xp-flash {
+  animation: xp-flash 2s ease forwards;
+}
+
+/* ── Sidebar item active ── */
+.sidebar-item-active {
+  background: rgba(0, 255, 136, 0.08);
+  border-left: 3px solid #00FF88;
+  color: #00FF88;
+}
+
+/* ── Badge gradients ── */
+.badge-bronze {
+  background: linear-gradient(135deg, #cd7f32, #a0522d);
+  box-shadow: 0 0 10px rgba(205, 127, 50, 0.4);
+}
+.badge-prata {
+  background: linear-gradient(135deg, #c0c0c0, #808080);
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.4);
+}
+.badge-ouro {
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+.badge-elite {
+  background: linear-gradient(135deg, #00FF88, #00AA55);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+}
+
+/* ── Tooltip ── */
+.tooltip {
+  position: relative;
+}
+.tooltip::before {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f0f0f;
+  border: 1px solid rgba(0,255,136,0.3);
+  color: #EAEAEA;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.tooltip:hover::before {
+  opacity: 1;
+}
